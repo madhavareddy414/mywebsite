@@ -1,0 +1,19 @@
+name: Madhava Pro Website CI
+ 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+ 
+jobs:
+  build:
+    runs-on: [self-hosted, madhava.aadya.tech]
+ 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Clear old running container
+      run: docker compose down -v && docker system prune -af
+    - name: Build and deploy container
+      run: docker compose up -d --build
